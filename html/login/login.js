@@ -6,7 +6,6 @@
 //			id: 'syzc.html'
 //		}]
 	});
-	
 	var nativeWebview, imm, InputMethodManager;
 	var initNativeObjects = function() {
 		if($.os.android) {
@@ -50,6 +49,12 @@
 				}
 			},20);
 		};
+		
+		var state_login = JSON.parse(plus.storage.getItem('$state_login') || "{}");
+		console.log(state_login.state_login);
+		if(state_login.state_login){
+			toMain();
+		}
 		initNativeObjects();
 		var ajax_lock = false;
 		document.getElementById("login").addEventListener('tap', function() {
@@ -93,8 +98,9 @@
 //							targetTab: 'index1.html'
 //						});
 						pw.value ='';
-						console.log(JSON.parse(plus.storage.getItem('$tffz_u_i')).tfid);
-//						
+//						console.log(JSON.parse(plus.storage.getItem('$tffz_u_i')).tfid);
+						
+						localStorage.setItem('$state_login', JSON.stringify(1));
 						toMain();
 //						if(mui.os.ios) {
 //							$.fire(plus.webview.getWebviewById('wo.html'),"shuaxin",null);

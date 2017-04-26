@@ -13,6 +13,7 @@
 		mui.back = function(event) {
 			backButtonPress++;
 			if (backButtonPress > 1) {
+				localStorage.setItem('$state_login', JSON.stringify('{}'));
 				plus.runtime.quit();
 			} else {
 				plus.nativeUI.toast('再按一次退出应用');
