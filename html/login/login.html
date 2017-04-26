@@ -1,0 +1,138 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<style>
+			.dengluye {
+				background: url(../../images/dengluye.png);
+			}
+			
+			.anniu14 {
+				width: 80%;
+				margin: 0 auto;
+				height: 42px;
+				font-size: 1em;
+			}
+			
+			.dengluye1 {
+				background: url(../../images/dengluye1.png);
+				height: 196px;
+				bottom: 0px;
+				position: absolute;
+				margin: 0 auto;
+				width: 100%;
+				z-index: -1;
+			}
+			
+			.biaozhi {
+				margin: 0 auto;
+				margin-top: 20%;
+			}
+			
+			.dh_bj {
+				background: #0062CC;
+			}
+			
+			.dh_wz {
+				color: #FFFFFF;
+			}
+			
+			.bjys {
+				padding-top: 20px;
+				color: #0578bb;
+				font-family: '微软雅黑';
+			}
+			
+			.yzhem {
+				float: right;
+				width: 30%;
+				background: #8D8D8D;
+				color: #FFFFFF;
+				text-align: center;
+				padding: 5px;
+				line-height: 32px;
+			}
+			
+			.dgs {
+				margin: 0px;
+				padding: 0px;
+				background: url(../../images/fuwu.png);
+				height: 161px;
+				background-position: center top;
+				background-repeat: no-repeat;
+				margin-left: 0px;
+				margin-top: 0px;
+				margin-right: 0px;
+				margin-bottom: 0px;
+			}
+			
+			.img-circle {
+				border-bottom-left-radius: 50%;
+				border-bottom-right-radius: 50%;
+				border-top-left-radius: 50%;
+				border-top-right-radius: 50%;
+				height: 80px;
+				width: 80px;
+			}
+			
+			.zhucedeli {
+				padding: 8px;
+				font-family: '微软雅黑';
+				font-size: 1.1em;
+			}
+			
+			.bt {
+				text-align: center;
+				color: #FFFFFF;
+				font-size: 0.8em;
+				font-family: "微软雅黑";
+			}
+			
+			.anniu {
+				width: 93%;
+				background: #0062CC;
+				margin-top: 15px;
+				line-height: 35px;
+				color: #FFFFFF;
+			}
+			html,
+			body {
+				height: 100%;
+				margin: 1px 0 0 0;
+			}
+		</style>
+	</head>
+
+	<body class="dengluye">
+
+		<div class="biaozhi" align="center"><img src="../../images/logo1.png" width="35%"></div>
+		<div class="" style=" margin-top: 10%;">
+			<form id='login-form' class="" style="width: 80%; margin: 0 auto;">
+				<div class="mui-input-row">
+					<input id="username" type="number" class="mui-input-clear" placeholder="输入手机号" style="height: 43px;">
+				</div>
+				<div class="mui-input-row mui-password">
+					<input id="password" type="password" class="mui-input-password" placeholder="输入密码" style="height: 43px;">
+				</div>
+				<!--<li class="mui-table mui-table-view-cell mui-tab-label">
+				<p>自动登录</p>
+					<div id="autoLogin" class="mui-switch">
+						<div class="mui-switch-handle"></div>
+					</div>
+				</li>-->
+			</form>
+			<div align="center" style="margin-top: 3%;">
+				<button id='login' class="mui-btn mui-btn-primary anniu14">登 录</button>
+			</div>
+		</div>
+		<div id="zc" align="center" class="zhucedeli" style="margin-top: 8%;">
+			<a>注 册</a>
+		</div>
+		<script src="../../js/mui.min.js"></script>
+		<script src="login.js"></script>
+	</body>
+</html>
