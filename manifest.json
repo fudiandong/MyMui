@@ -228,7 +228,8 @@
 					"html/login/login.js",
 					"css/mui.min.css",
 					"js/mui.min.js",
-					"fonts/mui.ttf"
+					"fonts/mui.ttf",
+					"html/login/app.js"
 				],
 				"refer": [
 					"index.html"

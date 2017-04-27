@@ -133,6 +133,74 @@
 			<a>注 册</a>
 		</div>
 		<script src="../../js/mui.min.js"></script>
-		<script src="login.js"></script>
+		<!--<script src="login.js"></script>-->
+		<script src="app.js"></script>
+		<script>
+			(function($){
+				$.init({
+					swipeBack: false //启用右滑关闭功能
+				});
+				$.plusReady(function(){
+					// 设置固定竖屏显示
+					plus.screen.lockOrientation("portrait-primary");
+					app.initNativeObjects();
+					var state = app.getState();
+					var mainPage = $.preload({
+						"id": 'main',
+						"url": '../../index.html'
+					});
+					var main_loaded_flag = false;
+					mainPage.addEventListener("loaded",function () {
+						main_loaded_flag = true;
+					});
+					var toMain = function() {
+						//使用定时器的原因：
+						//可能执行太快，main页面loaded事件尚未触发就执行自定义事件，此时必然会失败
+						var id = setInterval(function () {
+							if(main_loaded_flag){
+								clearInterval(id);
+								$.fire(mainPage, 'show', null);
+								mainPage.show("pop-in");
+							}
+						},20);
+					};
+					//  判断如果已经登陆过，自动进入主页
+					console.log("state.token = "+state.token);
+					console.log("state.account = "+state.account);
+					if (state.token) {
+						mui.toast(state.token);
+						toMain();
+					} 
+					// close splash
+					setTimeout(function() {
+						//关闭 splash
+						plus.navigator.closeSplashscreen();
+					}, 600);
+					//======
+					var loginButton = document.getElementById('login');
+					var accountBox = document.getElementById('username');
+					var passwordBox = document.getElementById('password');
+					loginButton.addEventListener('tap', function(event) {
+						var loginInfo = {
+							account: accountBox.value,
+							password: passwordBox.value
+						};
+						app.login(loginInfo, function(err) {
+							if (err) {
+								plus.nativeUI.toast(err);
+								return;
+							}
+							toMain();
+						});
+					});
+					//======	
+					
+					//-----
+					
+					//-----
+					
+				});
+			})(mui);
+		</script>
 	</body>
 </html>

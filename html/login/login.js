@@ -1,6 +1,6 @@
 (function($) {
 	$.init({
-		swipeBack: false, //启用右滑关闭功能
+		swipeBack: false//启用右滑关闭功能
 //		preloadPages: [{
 //			url: 'syzc.html',
 //			id: 'syzc.html'
@@ -100,7 +100,7 @@
 						pw.value ='';
 //						console.log(JSON.parse(plus.storage.getItem('$tffz_u_i')).tfid);
 						
-						localStorage.setItem('$state_login', JSON.stringify(1));
+						plus.storage.setItem('$state_login', JSON.stringify(1));
 						toMain();
 //						if(mui.os.ios) {
 //							$.fire(plus.webview.getWebviewById('wo.html'),"shuaxin",null);
