@@ -1,0 +1,258 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.css" rel="stylesheet" />
+		<style>
+			.dengluye {
+				background: url(../images/dengluye.png);
+			}
+			
+			.anniu14 {
+				width: 80%;
+				margin: 0 auto;
+				height: 42px;
+				font-size: 1em;
+			}
+			
+			.dengluye1 {
+				background: url(../images/dengluye1.png);
+				height: 196px;
+				bottom: 0px;
+				position: absolute;
+				margin: 0 auto;
+				width: 100%;
+				z-index: -1;
+			}
+			
+			.biaozhi {
+				margin: 0 auto;
+				margin-top: 20%;
+			}
+			
+			.dh_bj {
+				background: #0062CC;
+			}
+			
+			.dh_wz {
+				color: #FFFFFF;
+			}
+			
+			.bjys {
+				padding-top: 20px;
+				color: #0578bb;
+				font-family: '微软雅黑';
+			}
+			
+			.yzhem {
+				float: right;
+				width: 30%;
+				background: #8D8D8D;
+				color: #FFFFFF;
+				text-align: center;
+				padding: 5px;
+				line-height: 32px;
+			}
+			
+			.dgs {
+				margin: 0px;
+				padding: 0px;
+				background: url(images/fuwu.png);
+				height: 161px;
+				background-position: center top;
+				background-repeat: no-repeat;
+				margin-left: 0px;
+				margin-top: 0px;
+				margin-right: 0px;
+				margin-bottom: 0px;
+			}
+			
+			.img-circle {
+				border-bottom-left-radius: 50%;
+				border-bottom-right-radius: 50%;
+				border-top-left-radius: 50%;
+				border-top-right-radius: 50%;
+				height: 80px;
+				width: 80px;
+			}
+			
+			.zhucedeli {
+				padding: 8px;
+				font-family: '微软雅黑';
+				font-size: 1.1em;
+			}
+			
+			.bt {
+				text-align: center;
+				color: #FFFFFF;
+				font-size: 0.8em;
+				font-family: "微软雅黑";
+			}
+			
+			.anniu {
+				width: 93%;
+				background: #0062CC;
+				margin-top: 15px;
+				line-height: 35px;
+				color: #FFFFFF;
+			}
+			
+			html,
+			body {
+				height: 100%;
+				margin: 1px 0 0 0;
+			}
+		</style>
+	</head>
+
+	<body class="dengluye">
+
+		<div class="biaozhi" align="center"><img src="../images/logo1.png" width="35%"></div>
+		<div class="" style=" margin-top: 10%;">
+			<form id='login-form' class="" style="width: 80%; margin: 0 auto;">
+				<div class="mui-input-row">
+					<input id="username" type="number" class="mui-input-clear" placeholder="输入手机号" style="height: 43px;">
+				</div>
+				<div class="mui-input-row mui-password">
+					<input id="password" type="password" class="mui-input-password" placeholder="输入密码" style="height: 43px;">
+				</div>
+			</form>
+			<div align="center" style="margin-top: 3%;">
+				<button id='login' class="mui-btn mui-btn-primary anniu14">登 录</button>
+			</div>
+		</div>
+		<div id="zc" align="center" class="zhucedeli" style="margin-top: 8%;">
+			<a>注 册</a>
+		</div>
+		<script src="../js/mui.min.js"></script>
+		<script src="app.js"></script>
+		<!--<script src="denglu.js"></script>-->
+		<script>
+			mui.init(
+//				swipeBack: false //启用右滑关闭功能	
+			);
+			mui.plusReady(function() {
+				plus.screen.lockOrientation("portrait-primary");
+				var state = app.getState();
+				var mainPage = mui.preload({
+					"id": 'main',
+					"url": '../index.html'
+				});
+				var main_loaded_flag = false;
+				mainPage.addEventListener("loaded",function () {
+					main_loaded_flag = true;
+				});
+				var toMain = function() {
+					//使用定时器的原因：
+					//可能执行太快，main页面loaded事件尚未触发就执行自定义事件，此时必然会失败
+					var id = setInterval(function () {
+						if(main_loaded_flag){
+							clearInterval(id);
+							mui.fire(mainPage, 'show', null);
+							mainPage.show("pop-in");
+						}
+					},20);
+				};	
+				if (plus.storage.getItem('state')) {
+					mui.toast(plus.storage.getItem('state'));
+					toMain();
+				} 
+				// close splash
+				setTimeout(function() {
+					//关闭 splash
+					plus.navigator.closeSplashscreen();
+				}, 600);
+				initNativeObjects();
+				var ajax_lock = false;
+				document.getElementById("login").addEventListener('tap', function() {
+					var un = document.getElementById('username');
+					var pw = document.getElementById('password');
+					if(un.value == "" || un.value.length != 11) {
+						mui.toast("请输入11位手机号码");
+						showSoftInput(un);
+						return;
+					}
+					if(pw.value == "") {
+						mui.toast("密码不能为空");
+						showSoftInput(pw);
+						return;
+					}
+					var url = urlpath+"AppUserAction?act=login";
+					if(ajax_lock) {
+						mui.toast("请稍等待");
+						return;
+					}
+					ajax_lock = true;
+					var url = urlpath+"AppUserAction?act=login";
+					mui.ajax(url, {
+						data: {
+							'user.phone': un.value,
+							'user.password': pw.value
+						},
+						dataType: 'json', //服务器返回json格式数据
+						type: 'post', //HTTP请求类型
+						timeout: 10000, //超时时间设置为10秒；
+						crossDomain:true, // 2017年4月17日 16:49:24 修改
+						success: function(data) {
+							if(data.code == 1) {
+								plus.storage.setItem('state',JSON.stringify('1'));
+//								plus.storage.setItem('$tffz_u_i', JSON.stringify(data.rows[0]));
+								pw.value ='';
+								mui.toast(data.message);
+								toMain();
+//								if(mui.os.ios) {
+//									$.fire(plus.webview.getWebviewById('wo.html'),"shuaxin",null);
+//									$.fire(plus.webview.getWebviewById('sp1.html'),"shuaxin",null);
+//									$.fire(plus.webview.getWebviewById('index1.html'),"shuaxin",null);
+//									$.fire(plus.webview.getWebviewById('fw.html'),"shuaxin",null);
+//								} else{
+//									plus.webview.getWebviewById('index1.html').reload();
+//									plus.webview.getWebviewById('wo.html').reload();
+//									plus.webview.getWebviewById('sp1.html').reload();
+//									plus.webview.getWebviewById('fw.html').reload();
+//								}
+							} else {
+								mui.toast(data.message);
+							}
+							ajax_lock = false;
+						},
+						error: function(xhr, type, errorThrown) {
+							console.log(type);
+							ajax_lock = false;
+						}
+					});
+				});
+					
+				
+			});
+			
+			var nativeWebview, imm, InputMethodManager;
+			var initNativeObjects = function() {
+				if(mui.os.android) {
+					var main = plus.android.runtimeMainActivity();
+					var Context = plus.android.importClass("android.content.Context");
+					InputMethodManager = plus.android.importClass("android.view.inputmethod.InputMethodManager");
+					imm = main.getSystemService(Context.INPUT_METHOD_SERVICE);
+				} else {
+					nativeWebview = plus.webview.currentWebview().nativeInstanceObject();
+				}
+			};
+			var showSoftInput = function(input) {
+				if(mui.os.android) {
+					imm.toggleSoftInput(0, InputMethodManager.SHOW_FORCED);
+				} else {
+					nativeWebview.plusCallMethod({
+						"setKeyboardDisplayRequiresUserAction": false
+					});
+				}
+				setTimeout(function() {
+					input.focus();
+				}, 200);
+			};
+		</script>
+	</body>
+
+</html>
